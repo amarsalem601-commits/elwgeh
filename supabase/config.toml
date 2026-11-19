@@ -1,0 +1,7 @@
+project_id = "koqcjwhawmftoavlobiy"
+
+[functions.repair-chat]
+verify_jwt = false
+
+[functions.erp-assistant]
+verify_jwt = false

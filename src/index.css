@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 25% 97%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 0 72% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 20% 94%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 18% 94%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 220 20% 94%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 16% 88%;
+    --input: 220 16% 88%;
+    --ring: 0 72% 51%;
+
+    --radius: 0.875rem;
+
+    --sidebar-background: 222 47% 9%;
+    --sidebar-foreground: 220 22% 92%;
+    --sidebar-primary: 0 72% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 35% 14%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 222 28% 17%;
+    --sidebar-ring: 0 72% 51%;
+    --sidebar-muted: 220 12% 62%;
+
+    --success: 152 70% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 30% 10%;
+    --info: 210 80% 52%;
+    --info-foreground: 0 0% 100%;
+
+    --chart-1: 0 72% 51%;
+    --chart-2: 210 80% 52%;
+    --chart-3: 152 70% 40%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 270 60% 55%;
+
+    font-family: 'Cairo', 'Manrope', sans-serif;
+  }
+
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 220 20% 96%;
+
+    --card: 222 38% 10%;
+    --card-foreground: 220 20% 96%;
+
+    --popover: 222 38% 10%;
+    --popover-foreground: 220 20% 96%;
+
+    --primary: 0 72% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 220 20% 96%;
+
+    --muted: 222 30% 14%;
+    --muted-foreground: 220 12% 65%;
+
+    --accent: 222 30% 16%;
+    --accent-foreground: 220 20% 96%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 24% 18%;
+    --input: 222 24% 18%;
+    --ring: 0 72% 51%;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 220 20% 96%;
+    --sidebar-primary: 0 72% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 30% 12%;
+    --sidebar-accent-foreground: 220 20% 96%;
+    --sidebar-border: 222 24% 18%;
+    --sidebar-ring: 0 72% 51%;
+    --sidebar-muted: 0 0% 40%;
+
+    --success: 145 65% 38%;
+    --warning: 38 80% 45%;
+    --info: 210 70% 48%;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100vh;
+  }
+
+  [dir="rtl"] {
+    font-family: 'Cairo', sans-serif;
+  }
+
+  [dir="ltr"] {
+    font-family: 'Manrope', sans-serif;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(0 72% 48%), hsl(358 78% 58%));
+  }
+  .gradient-sidebar {
+    background: linear-gradient(180deg, hsl(222 47% 9%), hsl(222 52% 6%));
+  }
+  .shadow-card {
+    box-shadow: 0 1px 2px hsl(222 47% 11% / 0.04), 0 8px 24px hsl(222 47% 11% / 0.04);
+  }
+  .shadow-card-hover {
+    box-shadow: 0 16px 40px hsl(222 47% 11% / 0.10);
+  }
+  .glass-card {
+    background: hsl(var(--card) / 0.82);
+    backdrop-filter: blur(18px);
+  }
+}
+
+button,
+a,
+input,
+textarea {
+  transition: all 180ms ease;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid hsl(var(--ring) / 0.18);
+  outline-offset: 2px;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.45);
+}

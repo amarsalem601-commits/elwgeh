@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1795020866329,
+      "tag": "0000_create_ai_assistant_conversations",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795020945839,
+      "tag": "0001_add_supplier_records_and_ai_proposals",
+      "breakpoints": true
+    }
+  ]
+}

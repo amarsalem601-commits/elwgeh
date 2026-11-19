@@ -1,0 +1,7 @@
+- [x] Improve the public home page and add the new contact number.
+- [x] Replace the app's current logos with the uploaded El Wageh logo across public, login, admin, and employee pages.
+- [ ] Harden authentication settings and verify current login/signup behavior without weakening existing access controls.
+- [ ] Add account-persisted threaded AI assistants for ERP reporting and approved business actions across dashboards.
+- [ ] Add a separate assistant for proposed system appearance changes, with explicit confirmation before applying.
+- [ ] Improve admin control access while preserving employee permissions.
+- [ ] Validate changed flows, inspect build/runtime logs, and re-read this roadmap before reporting.
