@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,46 +7,46 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import DashboardPage from "./pages/DashboardPage";
-import AssistantChatPage from "./pages/AssistantChatPage";
-import ProductsPage from "./pages/ProductsPage";
-import SalesPage from "./pages/SalesPage";
-import PurchasesPage from "./pages/PurchasesPage";
-import InventoryPage from "./pages/InventoryPage";
-import ReportsPage from "./pages/ReportsPage";
-import CustomersPage from "./pages/CustomersPage";
-import SuppliersPage from "./pages/SuppliersPage";
-import EmployeesPage from "./pages/EmployeesPage";
-import SettingsPage from "./pages/SettingsPage";
-import EmployeeViewPage from "./pages/EmployeeViewPage";
-import EmployeeDashboardPage from "./pages/EmployeeDashboardPage";
-import AttendancePage from "./pages/AttendancePage";
-import LocationTrackingPage from "./pages/LocationTrackingPage";
-import ExpensesPage from "./pages/ExpensesPage";
-import SalariesPage from "./pages/SalariesPage";
-import TasksPage from "./pages/TasksPage";
-import NotificationsPage from "./pages/NotificationsPage";
-import RepairBookingPage from "./pages/RepairBookingPage";
-import RepairManagementPage from "./pages/RepairManagementPage";
-import InvoicesPage from "./pages/InvoicesPage";
-import AccountingPage from "./pages/AccountingPage";
-import WarehousesPage from "./pages/WarehousesPage";
-import CRMPage from "./pages/CRMPage";
-import RepairPageDesignPage from "./pages/RepairPageDesignPage";
-import ProfilePage from "./pages/ProfilePage";
-import ProfileManagementPage from "./pages/ProfileManagementPage";
-import DatabaseViewerPage from "./pages/DatabaseViewerPage";
-import TeamManagementPage from "./pages/TeamManagementPage";
-import AboutPage from "./pages/public/AboutPage";
-import BranchesPage from "./pages/public/BranchesPage";
-import ContactPage from "./pages/public/ContactPage";
-import TeamPage from "./pages/public/TeamPage";
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const AssistantChatPage = lazy(() => import("./pages/AssistantChatPage"));
+const ProductsPage = lazy(() => import("./pages/ProductsPage"));
+const SalesPage = lazy(() => import("./pages/SalesPage"));
+const PurchasesPage = lazy(() => import("./pages/PurchasesPage"));
+const InventoryPage = lazy(() => import("./pages/InventoryPage"));
+const ReportsPage = lazy(() => import("./pages/ReportsPage"));
+const CustomersPage = lazy(() => import("./pages/CustomersPage"));
+const SuppliersPage = lazy(() => import("./pages/SuppliersPage"));
+const EmployeesPage = lazy(() => import("./pages/EmployeesPage"));
+const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const EmployeeViewPage = lazy(() => import("./pages/EmployeeViewPage"));
+const EmployeeDashboardPage = lazy(() => import("./pages/EmployeeDashboardPage"));
+const AttendancePage = lazy(() => import("./pages/AttendancePage"));
+const LocationTrackingPage = lazy(() => import("./pages/LocationTrackingPage"));
+const ExpensesPage = lazy(() => import("./pages/ExpensesPage"));
+const SalariesPage = lazy(() => import("./pages/SalariesPage"));
+const TasksPage = lazy(() => import("./pages/TasksPage"));
+const NotificationsPage = lazy(() => import("./pages/NotificationsPage"));
+const RepairBookingPage = lazy(() => import("./pages/RepairBookingPage"));
+const RepairManagementPage = lazy(() => import("./pages/RepairManagementPage"));
+const InvoicesPage = lazy(() => import("./pages/InvoicesPage"));
+const AccountingPage = lazy(() => import("./pages/AccountingPage"));
+const WarehousesPage = lazy(() => import("./pages/WarehousesPage"));
+const CRMPage = lazy(() => import("./pages/CRMPage"));
+const RepairPageDesignPage = lazy(() => import("./pages/RepairPageDesignPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const ProfileManagementPage = lazy(() => import("./pages/ProfileManagementPage"));
+const DatabaseViewerPage = lazy(() => import("./pages/DatabaseViewerPage"));
+const TeamManagementPage = lazy(() => import("./pages/TeamManagementPage"));
+const AboutPage = lazy(() => import("./pages/public/AboutPage"));
+const BranchesPage = lazy(() => import("./pages/public/BranchesPage"));
+const ContactPage = lazy(() => import("./pages/public/ContactPage"));
+const TeamPage = lazy(() => import("./pages/public/TeamPage"));
 import DashboardLayout from "./components/DashboardLayout";
 import EmployeeLayout from "./components/EmployeeLayout";
 import OfflineScreen from "./components/OfflineScreen";
-import NotFound from "./pages/NotFound";
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -75,7 +76,8 @@ const AppRoutes = () => {
   }
 
   return (
-    <Routes>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" /></div>}>
+      <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/assistant' : '/employee-dashboard'} replace /> : <LoginPage />} />
       <Route path="/signup" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/assistant' : '/employee-dashboard'} replace /> : <SignupPage />} />
       <Route path="/" element={<Navigate to={isAuthenticated ? (userRole === 'admin' ? '/assistant' : '/employee-dashboard') : '/repair-booking'} replace />} />
@@ -134,7 +136,8 @@ const AppRoutes = () => {
       <Route path="/employee/profile" element={<EmployeeRoute><ProfilePage /></EmployeeRoute>} />
 
       <Route path="*" element={<NotFound />} />
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 };
 
