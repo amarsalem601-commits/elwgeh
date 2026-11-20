@@ -9,8 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Wrench, Car, Phone, User, Calendar, MessageCircle, CheckCircle, ShoppingBag, MapPin, Clock, X, Shield, Users, ChevronLeft, Settings, Home, Menu } from 'lucide-react';
 import brandLogo from '@/assets/el-wageh-logo.jpeg';
-import truckPhoto from '@/assets/red-truck-showroom.jpg';
-import mechanicPhoto from '@/assets/air-system-workshop.jpg';
+import truckPhoto from '@/assets/volvo-truck.jpg';
+import mechanicPhoto from '@/assets/mercedes-acros.jpg';
 import { BRANCHES, CONTACT_BRANCHES, PHONES } from '@/data/companyInfo';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
@@ -306,7 +306,7 @@ const RepairBookingPage: React.FC = () => {
           <>
             <section dir="ltr" className="grid overflow-hidden bg-black text-white md:min-h-[430px] md:grid-cols-2">
               <div className="relative aspect-[4/3] min-h-[230px] overflow-hidden sm:aspect-video md:aspect-auto md:min-h-[430px]">
-                <img src={truckPhoto} alt="شاحنة نقل ثقيل حمراء داخل معرض" className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
+                <img src={truckPhoto} alt="شاحنة فولفو" className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10" />
                 <Button onClick={() => setStep('form')} className="absolute bottom-3 left-3 h-11 gap-2 rounded-full border-2 border-red-400 bg-red-600 px-4 text-sm font-black text-white shadow-xl hover:bg-red-700 sm:bottom-6 sm:left-6 sm:h-14 sm:px-8 sm:text-lg">
                   <Wrench className="h-4 w-4 sm:h-5 sm:w-5" /> احجز صيانة الآن
@@ -333,7 +333,7 @@ const RepairBookingPage: React.FC = () => {
 
             <section dir="ltr" className="mx-3 grid overflow-hidden rounded-lg border-y-2 border-red-600 bg-white sm:mx-4 md:mx-auto md:max-w-7xl md:grid-cols-[.9fr_1.1fr]">
               <div className="relative aspect-[4/3] min-h-[210px] overflow-hidden md:aspect-auto md:min-h-[270px]">
-                <img src={mechanicPhoto} alt="فني صيانة يعمل على إصلاح سيارة" className="absolute inset-0 h-full w-full object-cover object-center" />
+                <img src={mechanicPhoto} alt="مرسيدس أكتروس أثناء الصيانة" className="absolute inset-0 h-full w-full object-cover object-center" />
                 <div className="absolute inset-0 border-[10px] border-red-600/90 md:border-[14px]" />
               </div>
               <div dir="rtl" className="flex flex-col justify-center px-4 py-6 text-right sm:px-8 md:py-10">
