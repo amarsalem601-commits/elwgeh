@@ -5,9 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Eye, EyeOff, ImagePlus, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
 import type { ShowcaseProduct } from '@/hooks/usePublicShowcase';
 
@@ -111,12 +109,6 @@ const ShowcaseProductsPage: React.FC = () => {
   };
 
   const save = async () => {
-    const name = form.name.trim();
-    const price = form.price === null ? null : Number(form.price);
-    if (!name || (price !== null && (!Number.isFinite(price) || price < 0))) {
-      toast({ title: 'تحقق من الاسم والسعر', variant: 'destructive' });
-      return;
-    }
     if (!user) {
       toast({ title: 'يجب تسجيل الدخول قبل الحفظ', variant: 'destructive' });
       return;
@@ -125,12 +117,12 @@ const ShowcaseProductsPage: React.FC = () => {
     setSaving(true);
     const payload = {
       ...form,
-      name,
-      category: form.category.trim(),
-      description: form.description.trim(),
+      name: form.name.trim() || 'منتج',
+      category: '',
+      description: '',
       image_url: form.image_url.trim(),
-      price,
-      display_order: Number(form.display_order) || 0,
+      price: null,
+      display_order: editing ? editing.display_order : 0,
       created_by: user.id,
     };
     const result = editing
@@ -223,9 +215,6 @@ const ShowcaseProductsPage: React.FC = () => {
         <DialogContent dir="rtl" className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
           <DialogHeader><DialogTitle className="font-cairo">{editing ? 'تعديل منتج' : 'إضافة منتج للعرض'}</DialogTitle></DialogHeader>
           <div className="space-y-4">
-            <div className="space-y-2"><Label>اسم المنتج</Label><Input value={form.name} onChange={event => setForm(current => ({ ...current, name: event.target.value }))} /></div>
-            <div className="space-y-2"><Label>التصنيف</Label><Input value={form.category} onChange={event => setForm(current => ({ ...current, category: event.target.value }))} /></div>
-            <div className="space-y-2"><Label>وصف المنتج</Label><Textarea rows={3} value={form.description} onChange={event => setForm(current => ({ ...current, description: event.target.value }))} /></div>
             <div className="space-y-2">
               <Label>صورة المنتج</Label>
               <input
@@ -262,10 +251,6 @@ const ShowcaseProductsPage: React.FC = () => {
                   <Upload className="h-4 w-4" /> {uploading ? 'جاري الرفع...' : 'تغيير الصورة'}
                 </Button>
               )}
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2"><Label>السعر (اختياري)</Label><Input type="number" min="0" value={form.price ?? ''} onChange={event => setForm(current => ({ ...current, price: event.target.value === '' ? null : Number(event.target.value) }))} /></div>
-              <div className="space-y-2"><Label>ترتيب العرض</Label><Input type="number" value={form.display_order} onChange={event => setForm(current => ({ ...current, display_order: Number(event.target.value) || 0 }))} /></div>
             </div>
             <label className="flex items-center gap-2 text-sm font-cairo">
               <input type="checkbox" checked={form.is_active} onChange={event => setForm(current => ({ ...current, is_active: event.target.checked }))} />
