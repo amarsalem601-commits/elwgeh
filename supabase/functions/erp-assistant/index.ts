@@ -329,7 +329,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const normalizeData = (config: EntityConfig, raw: unknown) => {
   if (!isRecord(raw)) throw new AssistantError("بيانات الإجراء غير مكتملة.");
   const aliases = config.table === "suppliers"
-    ? { address: "location", contact_person: "contact" }
+    ? { address: "location", contact_person: "contact", responsible_person: "contact" }
     : config.table === "customers"
     ? { address: "location" }
     : {};

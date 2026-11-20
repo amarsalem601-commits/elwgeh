@@ -11,7 +11,7 @@ import { Send, Wrench, Car, Phone, User, Calendar, MessageCircle, CheckCircle, S
 import brandLogo from '@/assets/el-wageh-logo.jpeg';
 import truckPhoto from '@/assets/red-truck-showroom.jpg';
 import mechanicPhoto from '@/assets/air-system-workshop.jpg';
-import { BRANCHES, PHONES } from '@/data/companyInfo';
+import { BRANCHES, CONTACT_BRANCHES, PHONES } from '@/data/companyInfo';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -379,12 +379,22 @@ const RepairBookingPage: React.FC = () => {
                 <h3 className="text-xl font-black text-slate-900">تواصل معنا</h3>
                 <Phone className="h-6 w-6 text-red-600" />
               </div>
-              <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-4">
-                {PHONES.map((phone) => (
-                  <a key={phone} href={`tel:${phone}`} dir="ltr" className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm font-black text-slate-800 hover:border-red-200 hover:bg-red-50 hover:text-red-700">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-red-600 shadow-sm"><Phone className="h-4 w-4" /></span>
-                    {phone}
-                  </a>
+              <div className="grid gap-3 p-4 md:grid-cols-2">
+                {CONTACT_BRANCHES.map((branch) => (
+                  <div key={branch.name} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                    <h4 className="mb-2 flex items-center gap-2 font-cairo text-sm font-black text-slate-900">
+                      <MapPin className="h-4 w-4 text-red-600" />
+                      {branch.name}
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {branch.phones.map((phone) => (
+                        <a key={phone} href={`tel:${phone}`} dir="ltr" className="flex items-center justify-center gap-2 rounded-lg border border-slate-100 bg-white px-3 py-2.5 text-sm font-black text-slate-800 shadow-sm hover:border-red-200 hover:text-red-700">
+                          <Phone className="h-4 w-4 text-red-600" />
+                          {phone}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </section>
