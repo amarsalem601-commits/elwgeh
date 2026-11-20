@@ -51,13 +51,13 @@ const Index: React.FC = () => {
           ) : products.length === 0 ? (
             <Card className="border-slate-200 bg-white"><CardContent className="py-8 text-center text-sm text-slate-500 font-cairo">سيتم عرض المنتجات هنا قريباً.</CardContent></Card>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {products.map((product, index) => (
                 <Reveal key={product.id} delay={index * 70}>
-                  <Card className="h-full overflow-hidden border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg">
-                    <div className="aspect-[16/10] bg-slate-100">
+                  <Card className="mx-auto h-full w-full max-w-[350px] overflow-hidden border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg">
+                    <div className="aspect-[210/297] bg-white">
                       {product.image_url ? (
-                        <img src={product.image_url} alt={product.name} loading="lazy" className="h-full w-full object-cover" />
+                        <img src={product.image_url} alt={product.name} loading="lazy" className="h-full w-full object-contain" />
                       ) : (
                         <div className="flex h-full items-center justify-center"><ImagePlus className="h-10 w-10 text-slate-300" /></div>
                       )}

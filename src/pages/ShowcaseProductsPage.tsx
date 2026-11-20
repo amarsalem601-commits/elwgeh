@@ -177,12 +177,12 @@ const ShowcaseProductsPage: React.FC = () => {
       ) : products.length === 0 ? (
         <Card><CardContent className="py-12 text-center text-muted-foreground font-cairo">لم تتم إضافة منتجات للعرض بعد.</CardContent></Card>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map(product => (
-            <Card key={product.id} className="overflow-hidden">
-              <div className="aspect-[16/10] bg-muted">
+            <Card key={product.id} className="mx-auto w-full max-w-[350px] overflow-hidden">
+              <div className="aspect-[210/297] bg-white">
                 {product.image_url ? (
-                  <img src={product.image_url} alt={product.name} className="h-full w-full object-cover" />
+                  <img src={product.image_url} alt={product.name} className="h-full w-full object-contain" />
                 ) : (
                   <div className="flex h-full items-center justify-center"><ImagePlus className="h-10 w-10 text-muted-foreground/40" /></div>
                 )}
@@ -229,7 +229,7 @@ const ShowcaseProductsPage: React.FC = () => {
               />
               {form.image_url ? (
                 <div className="relative overflow-hidden rounded-lg border border-border">
-                  <img src={form.image_url} alt="معاينة صورة المنتج" className="aspect-[16/10] w-full object-cover" />
+                  <img src={form.image_url} alt="معاينة صورة المنتج" className="aspect-[210/297] w-full bg-white object-contain" />
                   <Button type="button" size="icon" variant="secondary" className="absolute left-2 top-2 h-8 w-8" onClick={removeSelectedImage} aria-label="إزالة الصورة">
                     <X className="h-4 w-4" />
                   </Button>
@@ -239,7 +239,7 @@ const ShowcaseProductsPage: React.FC = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
-                  className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-muted/30 text-muted-foreground transition-colors hover:border-primary/50 hover:bg-muted/50"
+                  className="flex aspect-[210/297] w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-white text-muted-foreground transition-colors hover:border-primary/50 hover:bg-muted/50"
                 >
                   {uploading ? <Upload className="h-8 w-8 animate-pulse" /> : <ImagePlus className="h-8 w-8" />}
                   <span className="font-cairo text-sm">{uploading ? 'جاري رفع الصورة...' : 'اختر صورة من الجهاز'}</span>
