@@ -245,6 +245,7 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.database': { ar: 'قاعدة البيانات', en: 'Database' },
   'nav.profileManagement': { ar: 'إدارة الملفات الشخصية', en: 'Profile Management' },
   'nav.team': { ar: 'إدارة الفريق', en: 'Team Management' },
+  'nav.showcaseProducts': { ar: 'منتجات الصفحة العامة', en: 'Showcase Products' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

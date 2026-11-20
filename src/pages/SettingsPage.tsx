@@ -24,6 +24,7 @@ const SettingsPage: React.FC = () => {
     { icon: UsersIcon, label: isAr ? 'إدارة الملفات الشخصية' : 'Profile Management', desc: isAr ? 'إدارة ملفات الموظفين' : 'Manage employee profiles', path: '/profile-management', color: 'bg-pink-500' },
     { icon: UserCheck, label: isAr ? 'الموظفين والصلاحيات' : 'Employees & Permissions', desc: isAr ? 'إدارة الموظفين وصلاحياتهم' : 'Manage employees', path: '/employees', color: 'bg-blue-500' },
     { icon: ShieldCheck, label: isAr ? 'إدارة الفريق' : 'Team Management', desc: isAr ? 'إدارة فريق العمل العام' : 'Public team page', path: '/team-management', color: 'bg-violet-500' },
+    { icon: Building2, label: isAr ? 'منتجات الصفحة العامة' : 'Public Showcase Products', desc: isAr ? 'إضافة وتعديل المنتجات المعروضة للزوار' : 'Manage products shown to visitors', path: '/showcase-products', color: 'bg-red-600' },
     { icon: Wrench, label: isAr ? 'تصميم صفحة الحجز' : 'Booking Page Design', desc: isAr ? 'تخصيص صفحة الحجز العامة' : 'Customize public booking page', path: '/repair-design', color: 'bg-amber-500' },
     { icon: Database, label: isAr ? 'قاعدة البيانات' : 'Database', desc: isAr ? 'استعراض وتعديل البيانات' : 'Browse and edit data', path: '/database', color: 'bg-zinc-700' },
     { icon: Building2, label: isAr ? 'المخازن' : 'Warehouses', desc: isAr ? 'إدارة الفروع والمخازن' : 'Manage branches & stock', path: '/warehouses', color: 'bg-orange-500' },

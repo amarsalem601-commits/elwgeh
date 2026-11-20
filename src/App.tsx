@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -38,6 +38,8 @@ const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const ProfileManagementPage = lazy(() => import("./pages/ProfileManagementPage"));
 const DatabaseViewerPage = lazy(() => import("./pages/DatabaseViewerPage"));
 const TeamManagementPage = lazy(() => import("./pages/TeamManagementPage"));
+const ShowcaseProductsPage = lazy(() => import("./pages/ShowcaseProductsPage"));
+const Index = lazy(() => import("./pages/Index"));
 const AboutPage = lazy(() => import("./pages/public/AboutPage"));
 const BranchesPage = lazy(() => import("./pages/public/BranchesPage"));
 const ContactPage = lazy(() => import("./pages/public/ContactPage"));
@@ -45,6 +47,7 @@ const TeamPage = lazy(() => import("./pages/public/TeamPage"));
 import DashboardLayout from "./components/DashboardLayout";
 import EmployeeLayout from "./components/EmployeeLayout";
 import OfflineScreen from "./components/OfflineScreen";
+import InstallAppPrompt from "./components/InstallAppPrompt";
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -61,7 +64,7 @@ const EmployeeRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const { isAuthenticated, userRole, loading } = useAuth();
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" /></div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
-  if (userRole === 'admin') return <Navigate to="/assistant" replace />;
+  if (userRole === 'admin') return <Navigate to="/dashboard" replace />;
   return <EmployeeLayout>{children}</EmployeeLayout>;
 };
 
@@ -69,6 +72,7 @@ const EmployeeRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 const AppRoutes = () => {
   const { isAuthenticated, userRole, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" /></div>;
@@ -76,10 +80,12 @@ const AppRoutes = () => {
 
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" /></div>}>
+      <div key={location.pathname} className="route-fade">
       <Routes>
-      <Route path="/login" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/assistant' : '/employee-dashboard'} replace /> : <LoginPage />} />
-      <Route path="/signup" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/assistant' : '/employee-dashboard'} replace /> : <SignupPage />} />
-      <Route path="/" element={<Navigate to={isAuthenticated ? (userRole === 'admin' ? '/assistant' : '/employee-dashboard') : '/repair-booking'} replace />} />
+      <Route path="/login" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/dashboard' : '/employee-dashboard'} replace /> : <LoginPage />} />
+      <Route path="/signup" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/dashboard' : '/employee-dashboard'} replace /> : <SignupPage />} />
+      <Route path="/" element={<RepairBookingPage />} />
+      <Route path="/home" element={<Index />} />
       
       {/* Admin routes */}
       <Route path="/dashboard" element={<AdminRoute><DashboardPage /></AdminRoute>} />
@@ -110,6 +116,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<AdminRoute><ProfilePage /></AdminRoute>} />
       <Route path="/profile-management" element={<AdminRoute><ProfileManagementPage /></AdminRoute>} />
       <Route path="/team-management" element={<AdminRoute><TeamManagementPage /></AdminRoute>} />
+      <Route path="/showcase-products" element={<AdminRoute><ShowcaseProductsPage /></AdminRoute>} />
       <Route path="/database" element={<AdminRoute><DatabaseViewerPage /></AdminRoute>} />
 
       {/* Public pages */}
@@ -136,6 +143,7 @@ const AppRoutes = () => {
 
       <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
     </Suspense>
   );
 };
@@ -149,6 +157,7 @@ const App = () => (
             <OfflineScreen>
               <Toaster />
               <BrowserRouter>
+                <InstallAppPrompt />
                 <AppRoutes />
               </BrowserRouter>
             </OfflineScreen>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,11 +7,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Wrench, Car, Phone, User, Calendar, MessageCircle, CheckCircle, ShoppingBag, MapPin, Clock, X, Shield, Users, ChevronLeft, Settings, Home, Menu } from 'lucide-react';
-import brandLogo from '@/assets/el-wageh-logo.jpeg';
+import { Send, Wrench, Car, Phone, User, Calendar, MessageCircle, CheckCircle, ShoppingBag, MapPin, Clock, X, Shield, ChevronLeft, Settings, Truck } from 'lucide-react';
+import brandLogo from '@/assets/el-wageh-brand.png';
 import truckPhoto from '@/assets/volvo-truck.jpg';
 import mechanicPhoto from '@/assets/mercedes-acros.jpg';
 import { BRANCHES, CONTACT_BRANCHES, PHONES } from '@/data/companyInfo';
+import PublicSiteHeader from '@/components/PublicSiteHeader';
+import PublicSiteFooter from '@/components/PublicSiteFooter';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -40,16 +42,19 @@ const defaultSettings: Record<string, string> = {
 
 const RepairBookingPage: React.FC = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const location = useLocation();
   const [cfg, setCfg] = useState(defaultSettings);
-  const [step, setStep] = useState<'intro' | 'form' | 'done'>('intro');
+  const [step, setStep] = useState<'intro' | 'form' | 'done'>(() =>
+    new URLSearchParams(location.search).get('step') === 'form' ? 'form' : 'intro'
+  );
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [customerBookings, setCustomerBookings] = useState<any[]>([]);
-  const [showTracker, setShowTracker] = useState(false);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [showTracker, setShowTracker] = useState(() =>
+    new URLSearchParams(location.search).get('view') === 'bookings'
+  );
   const [trackerPhone, setTrackerPhone] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -62,6 +67,12 @@ const RepairBookingPage: React.FC = () => {
     problem_description: '',
     appointment_date: '',
   });
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    if (query.get('step') === 'form') setStep('form');
+    if (query.get('view') === 'bookings') setShowTracker(true);
+  }, [location.search]);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -210,44 +221,13 @@ const RepairBookingPage: React.FC = () => {
 
   return (
     <div className="repair-booking-page min-h-screen bg-white text-slate-900" dir="rtl">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b-2 border-red-600 bg-[#090909] text-white shadow-lg">
-        <div dir="ltr" className="relative mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-2 sm:px-4 lg:px-6">
-          <div className="pointer-events-none absolute inset-y-0 left-[34%] w-14 -skew-x-[35deg] bg-red-600/90" />
-          <button onClick={() => setStep('intro')} className="flex shrink-0 items-center" aria-label="الصفحة الرئيسية">
-            <img src={brandLogo} alt="الوجيه" className="h-14 w-[4.5rem] object-contain" />
-            <span dir="rtl" className="mr-2 hidden text-right leading-tight sm:block">
-              <span className="block text-lg font-black text-white">الوجيه</span>
-              <span className="block text-xs font-bold text-white/85">لمنظمات الهواء</span>
-              <span dir="ltr" className="mt-0.5 inline-block rounded-sm bg-red-600 px-1.5 py-0.5 text-[8px] font-bold text-white">Air Brake &amp; Clutch Servo</span>
-            </span>
-          </button>
-
-          <nav dir="rtl" className="relative z-10 hidden items-center gap-1 lg:flex">
-            <button onClick={() => setStep('intro')} className="flex h-11 items-center gap-2 rounded-b-xl bg-red-600 px-4 text-sm font-black text-white"><Home className="h-4 w-4" /> الرئيسية</button>
-            <button onClick={() => navigate('/about')} className="flex h-11 items-center gap-2 rounded-md px-4 text-sm font-semibold text-white/85 hover:bg-white/10"><Users className="h-4 w-4" /> من نحن</button>
-            <button onClick={() => navigate('/contact')} className="flex h-11 items-center gap-2 rounded-md px-4 text-sm font-semibold text-white/85 hover:bg-white/10"><Phone className="h-4 w-4" /> تواصل معنا</button>
-            <button onClick={() => setShowTracker(true)} className="flex h-11 items-center gap-2 rounded-md px-4 text-sm font-semibold text-white/85 hover:bg-white/10"><ShoppingBag className="h-4 w-4" /> حجوزاتي</button>
-            <button onClick={() => setStep('form')} className="flex h-11 items-center gap-2 rounded-md bg-red-600 px-4 text-sm font-black text-white hover:bg-red-700"><Calendar className="h-4 w-4" /> احجز موعد إصلاح</button>
-          </nav>
-
-          <div dir="rtl" className="relative z-10 flex items-center gap-2 lg:hidden">
-            <button onClick={() => setStep('form')} className="flex h-10 items-center gap-1.5 rounded-md bg-red-600 px-3 text-xs font-bold text-white"><Calendar className="h-4 w-4" /> احجز الآن</button>
-            <button onClick={() => setMobileNavOpen(open => !open)} className="flex h-10 w-10 items-center justify-center rounded-md border border-white/25 text-white" aria-label={mobileNavOpen ? 'إغلاق القائمة' : 'فتح القائمة'} aria-expanded={mobileNavOpen}>
-              {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
-          {mobileNavOpen && (
-            <nav dir="rtl" className="absolute inset-x-0 top-full z-50 grid gap-1 border-t border-white/10 bg-[#090909] p-3 shadow-xl lg:hidden">
-              <button onClick={() => { setStep('intro'); setMobileNavOpen(false); }} className="flex h-11 items-center gap-3 rounded-md bg-red-600 px-3 text-sm font-bold text-white"><Home className="h-4 w-4" /> الرئيسية</button>
-              <button onClick={() => { navigate('/about'); setMobileNavOpen(false); }} className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white hover:bg-white/10"><Users className="h-4 w-4" /> من نحن</button>
-              <button onClick={() => { navigate('/branches'); setMobileNavOpen(false); }} className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white hover:bg-white/10"><MapPin className="h-4 w-4" /> فروعنا</button>
-              <button onClick={() => { navigate('/contact'); setMobileNavOpen(false); }} className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white hover:bg-white/10"><Phone className="h-4 w-4" /> تواصل معنا</button>
-              <button onClick={() => { setShowTracker(true); setMobileNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white hover:bg-white/10"><ShoppingBag className="h-4 w-4" /> حجوزاتي</button>
-            </nav>
-          )}
-        </div>
-      </header>
+      <PublicSiteHeader
+        onBook={() => setStep('form')}
+        onBookings={() => {
+          setShowTracker(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
 
       <main className={`space-y-5 pb-28 sm:space-y-6 ${step === 'intro' ? '' : 'px-3 py-4 sm:px-4'}`}>
         {/* Booking Tracker */}
@@ -308,13 +288,15 @@ const RepairBookingPage: React.FC = () => {
               <div className="relative aspect-[4/3] min-h-[230px] overflow-hidden sm:aspect-video md:aspect-auto md:min-h-[430px]">
                 <img src={truckPhoto} alt="شاحنة فولفو" className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10" />
-                <Button onClick={() => setStep('form')} className="absolute bottom-3 left-3 h-11 gap-2 rounded-full border-2 border-red-400 bg-red-600 px-4 text-sm font-black text-white shadow-xl hover:bg-red-700 sm:bottom-6 sm:left-6 sm:h-14 sm:px-8 sm:text-lg">
-                  <Wrench className="h-4 w-4 sm:h-5 sm:w-5" /> احجز صيانة الآن
+                <Button onClick={() => setStep('form')} className="booking-hero-button absolute bottom-3 left-3 h-11 gap-2 rounded-full border-2 border-red-400 bg-red-600 px-4 text-sm font-black text-white shadow-xl hover:bg-red-700 sm:bottom-6 sm:left-6 sm:h-14 sm:px-8 sm:text-lg">
+                  <Truck className="hover-truck h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true" />
+                  <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>احجز صيانة الآن</span>
                 </Button>
               </div>
-              <div dir="rtl" className="relative flex flex-col items-center justify-center bg-[#080808] px-4 py-5 text-center sm:px-8 sm:py-7 md:py-8">
+              <div dir="rtl" className="brand-hero-panel relative flex flex-col items-center justify-center overflow-hidden bg-[#080808] px-4 py-5 text-center sm:px-8 sm:py-7 md:py-8">
                 <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0, transparent 18px, rgba(255,255,255,.04) 19px, transparent 20px)' }} />
-                <img src={brandLogo} alt="الوجيه لمنظمات الهواء" className="relative z-10 max-h-40 w-full max-w-[500px] object-contain sm:max-h-64" />
+                <img src={brandLogo} alt="الوجيه لمنظمات الهواء" className="brand-hero-logo relative z-10 max-h-40 w-full max-w-[500px] object-contain sm:max-h-64" />
                 <p className="relative z-10 mt-1 text-xs font-bold text-white/80 sm:mt-2 sm:text-base">صيانة احترافية .. أداء أقوى .. أمان أعلى</p>
                 <div className="relative z-10 mt-3 grid w-full max-w-xl grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-4">
                   {[
@@ -361,8 +343,8 @@ const RepairBookingPage: React.FC = () => {
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 {BRANCHES.map((branch) => (
-                  <a key={branch.city} href={branch.mapUrl} target="_blank" rel="noreferrer" className="group flex items-center gap-3 rounded-lg border border-slate-200 p-4 hover:border-red-300 hover:bg-red-50/40">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600"><MapPin className="h-5 w-5" /></div>
+                  <a key={branch.city} href={branch.mapUrl} target="_blank" rel="noreferrer" className="branch-location-card group flex items-center gap-3 rounded-lg border border-slate-200 p-4 hover:border-red-300 hover:bg-red-50/40">
+                    <div className="branch-pin-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600"><MapPin className="branch-pin-icon h-5 w-5" /></div>
                     <div className="min-w-0">
                       <h4 className="font-black text-slate-900">{branch.city}</h4>
                       <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">{branch.address}</p>
@@ -530,11 +512,7 @@ const RepairBookingPage: React.FC = () => {
         )}
       </main>
 
-      <footer className="py-4 text-center border-t border-border bg-card">
-        <p className="text-xs font-cairo text-muted-foreground">
-          {cfg.footer_text}
-        </p>
-      </footer>
+      <PublicSiteFooter />
 
       {/* Floating Chat Bot */}
       {!chatOpen && (

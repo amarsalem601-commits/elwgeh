@@ -71,3 +71,11 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Mobile app and offline support
+
+The public website can be installed from a supported mobile browser using **نزّل تطبيق الوجيه**. On iPhone, use Safari's **Share → Add to Home Screen**. The installed version opens in its own app window.
+
+After the first online visit, the service worker caches the app shell and loaded static files; the public team and showcase product lists are also kept on the device. Booking submissions, account sign-in, and admin changes still require an internet connection.
+
+Before deploying, apply the Supabase migration `20261120150000_add_public_showcase_products.sql`. Admins can then manage the public catalog from **Settings → Public Showcase Products**; the existing team editor remains under **Team Management**.

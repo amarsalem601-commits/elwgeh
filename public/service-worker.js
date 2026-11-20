@@ -1,0 +1,66 @@
+const CACHE_NAME = 'elwageh-shell-v3';
+const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico'];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async cache => {
+      await cache.addAll(APP_SHELL);
+      try {
+        const response = await fetch('/precache-manifest.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Precache manifest request failed (${response.status})`);
+        const manifest = await response.json();
+        const assets = new Set(['/precache-manifest.json']);
+        for (const entry of Object.values(manifest)) {
+          if (entry.file) assets.add(`/${entry.file}`);
+          for (const asset of [...(entry.css || []), ...(entry.assets || [])]) assets.add(`/${asset}`);
+        }
+        await Promise.all([...assets].map(url => cache.add(url).catch(error => {
+          console.warn(`Unable to precache ${url}`, error);
+        })));
+      } catch (error) {
+        console.warn('Unable to precache the production asset manifest', error);
+      }
+    })
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          const copy = response.clone();
+          void caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          return response;
+        })
+        .catch(async () => (await caches.match(request, { ignoreVary: true })) || (await caches.match('/', { ignoreVary: true })) || (await caches.match('/repair-booking', { ignoreVary: true })))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(request, { ignoreVary: true }).then(cached => {
+      if (cached) return cached;
+      return fetch(request).then(response => {
+        if (response.ok && response.type === 'basic') {
+          const copy = response.clone();
+          void caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+        }
+        return response;
+      });
+    })
+  );
+});

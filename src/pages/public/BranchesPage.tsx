@@ -11,11 +11,11 @@ const BranchesPage: React.FC = () => (
     <p className="text-muted-foreground font-cairo mb-4">اختار أقرب فرع ليك واحصل على اتجاهات الوصول مباشرة.</p>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {BRANCHES.map((b, i) => (
-        <Card key={i} className="border-primary/20 hover:shadow-lg transition-shadow">
+        <Card key={i} className="branch-location-card border-primary/20 hover:shadow-lg transition-shadow">
           <CardContent className="p-5 space-y-3">
             <div className="flex items-start gap-3">
-              <div className="p-3 rounded-xl bg-primary/10 shrink-0">
-                <MapPin className="h-6 w-6 text-primary" />
+              <div className="branch-pin-wrap p-3 rounded-xl bg-primary/10 shrink-0">
+                <MapPin className="branch-pin-icon h-6 w-6 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-cairo font-bold text-lg">{b.city}</h3>

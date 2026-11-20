@@ -2,12 +2,12 @@ export const BRANCHES = [
   {
     city: 'القاهرة',
     address: '53 ش الحايس، متفرع من جسر البحر، شبرا',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('53 شارع الحايس جسر البحر شبرا القاهرة'),
+    mapUrl: 'https://www.google.com/maps/place/30%C2%B005%2733.2%22N+31%C2%B014%2736.5%22E/@30.0925669,31.2456695,17z',
   },
   {
     city: 'الإسكندرية',
     address: 'ش مساكن المدينة الجامعية، أمام الرضوان، مرغم',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('مساكن المدينة الجامعية الرضوان مرغم الإسكندرية'),
+    mapUrl: 'https://www.google.com/maps/place/31%C2%B004%2710.3%22N+29%C2%B049%2737.0%22E/@31.0695226,29.8291385,17z',
   },
   {
     city: 'كفر الزيات',
@@ -17,7 +17,7 @@ export const BRANCHES = [
   {
     city: 'ميت غمر',
     address: 'الحجبي، أمام حديقة الشهداء',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('الحجبي حديقة الشهداء ميت غمر'),
+    mapUrl: 'https://www.google.com/maps/place/%D9%85%D8%B1%D9%83%D8%B2+%D8%A7%D9%84%D9%88%D8%AC%D9%8A%D9%87+%D9%84%D8%A7%D9%86%D8%B8%D9%85%D9%87+%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%A1/@30.7369201,31.2657367,17z',
   },
 ];
 

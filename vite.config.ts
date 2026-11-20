@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  build: {
+    manifest: "precache-manifest.json",
+  },
   server: {
     host: "::",
     port: 8080,

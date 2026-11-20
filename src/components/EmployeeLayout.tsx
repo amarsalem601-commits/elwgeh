@@ -10,7 +10,7 @@ import {
   Menu, Users, Truck, Clock, ListTodo, Bell, Wallet, User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/el-wageh-logo.jpeg';
+import logo from '@/assets/el-wageh-brand.png';
 import { useLiveLocation } from '@/hooks/useLiveLocation';
 
 const pageIconMap: Record<string, React.FC<{ className?: string }>> = {

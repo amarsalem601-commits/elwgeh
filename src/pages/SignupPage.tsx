@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Lock, Mail, User, Phone, Sun, Moon, Globe } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '@/assets/el-wageh-logo.jpeg';
+import logo from '@/assets/el-wageh-brand.png';
 
 const SignupPage: React.FC = () => {
   const { signup } = useAuth();

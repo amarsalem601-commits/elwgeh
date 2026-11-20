@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#090909"/>
+  <path d="M66 304h380v112H66z" fill="#d71920"/>
+  <path d="M95 278c10-86 78-150 161-150s151 64 161 150H95z" fill="#f5f5f5"/>
+  <path d="M141 264c11-53 57-91 115-91s104 38 115 91H141z" fill="#090909"/>
+  <path d="M179 239h154v35H179zM203 202h106v25H203z" fill="#d71920"/>
+  <text x="256" y="365" fill="#fff" font-family="Arial,sans-serif" font-size="54" font-weight="700" text-anchor="middle">الوجيه</text>
+</svg>

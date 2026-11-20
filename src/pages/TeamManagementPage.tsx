@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,15 +27,19 @@ const TeamManagementPage: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const load = async () => {
-    const { data } = await supabase
+  const load = useCallback(async () => {
+    const { data, error } = await supabase
       .from('team_members')
       .select('*')
       .order('display_order', { ascending: true });
-    setMembers((data as any) || []);
-  };
+    if (error) {
+      toast({ title: 'تعذر تحميل أعضاء الفريق', description: error.message, variant: 'destructive' });
+      return;
+    }
+    setMembers(data || []);
+  }, [toast]);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { void load(); }, [load]);
 
   const openNew = () => { setEditing(empty); setOpen(true); };
   const openEdit = (m: TeamMember) => { setEditing(m); setOpen(true); };
@@ -77,7 +81,7 @@ const TeamManagementPage: React.FC = () => {
     }
     toast({ title: 'تم الحفظ ✅' });
     setOpen(false);
-    load();
+    void load();
   };
 
   const remove = async (id: string) => {
@@ -88,7 +92,7 @@ const TeamManagementPage: React.FC = () => {
       return;
     }
     toast({ title: 'تم الحذف' });
-    load();
+    void load();
   };
 
   return (

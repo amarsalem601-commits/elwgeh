@@ -11,7 +11,7 @@ import {
   BookOpen, ArrowRightLeft, Receipt, User, Database, UsersRound, Menu, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/el-wageh-logo.jpeg';
+import logo from '@/assets/el-wageh-brand.png';
 
 const navItems = [
   { key: 'nav.invoices', path: '/invoices', icon: Receipt, color: 'bg-blue-500' },
@@ -37,6 +37,7 @@ const navItems = [
   { key: 'nav.database', path: '/database', icon: Database, color: 'bg-zinc-700' },
   { key: 'nav.profileManagement', path: '/profile-management', icon: UsersRound, color: 'bg-pink-600' },
   { key: 'nav.team', path: '/team-management', icon: UsersRound, color: 'bg-violet-600' },
+  { key: 'nav.showcaseProducts', path: '/showcase-products', icon: Package, color: 'bg-red-600' },
   { key: 'nav.profile', path: '/profile', icon: User, color: 'bg-emerald-700' },
   { key: 'nav.settings', path: '/settings', icon: Settings, color: 'bg-gray-500' },
 ];
@@ -70,7 +71,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
         <div className="p-5 border-b border-white/10">
           <button
             type="button"
-            onClick={() => navigate('/assistant')}
+            onClick={() => navigate('/dashboard')}
             className="flex items-center gap-3 w-full text-start"
           >
             <div className="rounded-xl bg-white p-1.5 shadow-lg shrink-0">
