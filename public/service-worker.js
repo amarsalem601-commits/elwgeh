@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elwageh-shell-v3';
+const CACHE_NAME = 'elwageh-shell-v4';
 const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico'];
 
 self.addEventListener('install', event => {
