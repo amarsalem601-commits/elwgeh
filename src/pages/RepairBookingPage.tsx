@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,12 +40,21 @@ const defaultSettings: Record<string, string> = {
   chat_placeholder: 'اكتب مشكلة عربيتك...',
 };
 
-const RepairBookingPage: React.FC = () => {
+interface RepairBookingPageProps {
+  mode?: 'home' | 'booking';
+}
+
+const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' }) => {
   const { toast } = useToast();
   const location = useLocation();
+  const navigate = useNavigate();
   const [cfg, setCfg] = useState(defaultSettings);
   const [step, setStep] = useState<'intro' | 'form' | 'done'>(() =>
-    new URLSearchParams(location.search).get('step') === 'form' ? 'form' : 'intro'
+    mode === 'home'
+      ? 'intro'
+      : new URLSearchParams(location.search).get('view') === 'bookings'
+        ? 'done'
+        : 'form'
   );
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
@@ -70,9 +79,17 @@ const RepairBookingPage: React.FC = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    if (query.get('step') === 'form') setStep('form');
-    if (query.get('view') === 'bookings') setShowTracker(true);
-  }, [location.search]);
+    if (mode === 'home') {
+      setStep('intro');
+      setShowTracker(false);
+    } else if (query.get('view') === 'bookings') {
+      setStep('done');
+      setShowTracker(true);
+    } else {
+      setStep('form');
+      setShowTracker(false);
+    }
+  }, [location.search, mode]);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -222,14 +239,22 @@ const RepairBookingPage: React.FC = () => {
   return (
     <div className="repair-booking-page min-h-screen bg-white text-slate-900" dir="rtl">
       <PublicSiteHeader
-        onBook={() => setStep('form')}
-        onBookings={() => {
-          setShowTracker(true);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onBook={
+          mode === 'home'
+            ? () => navigate('/repair-booking?step=form')
+            : () => setStep('form')
+        }
+        onBookings={
+          mode === 'home'
+            ? () => navigate('/repair-booking?view=bookings')
+            : () => {
+                setShowTracker(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+        }
       />
 
-      <main className={`space-y-5 pb-28 sm:space-y-6 ${step === 'intro' ? '' : 'px-3 py-4 sm:px-4'}`}>
+      <main className={`repair-page-main space-y-5 pb-24 sm:space-y-6 lg:pb-28 ${step === 'intro' ? '' : 'px-3 py-4 sm:px-4'}`}>
         {/* Booking Tracker */}
         {showTracker && (
           <Card className="mx-3 sm:mx-4" style={{ borderColor: `hsl(${primaryColor} / 0.2)` }}>
@@ -518,25 +543,22 @@ const RepairBookingPage: React.FC = () => {
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(true)}
-          className="fixed bottom-5 left-5 z-30 h-14 w-14 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform"
-          style={{ backgroundColor: `hsl(${primaryColor})` }}
+          className="fixed bottom-[80px] left-3 z-[65] flex h-14 w-14 items-center justify-center overflow-visible rounded-full border-2 border-white bg-[#090909] shadow-[0_8px_28px_rgba(15,23,42,.35)] ring-2 ring-red-600/70 transition-transform hover:scale-105 sm:bottom-5 sm:left-5"
           aria-label="افتح المساعد الذكي"
         >
-          <MessageCircle className="h-6 w-6" />
-          <span className="absolute -top-1 -right-1 h-3 w-3 bg-green-500 rounded-full ring-2 ring-background animate-pulse" />
+          <img src={brandLogo} alt="" className="h-12 w-12 rounded-full object-contain" />
+          <span className="absolute -top-1 -right-1 h-3 w-3 animate-pulse rounded-full border-2 border-white bg-green-500" />
         </button>
       )}
 
       {chatOpen && (
-        <div className="fixed bottom-5 left-5 z-30 w-[calc(100vw-40px)] sm:w-[380px] h-[500px] max-h-[calc(100vh-40px)] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed bottom-[80px] left-3 z-[65] flex h-[min(520px,calc(100dvh-170px))] w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl sm:bottom-5 sm:left-5 sm:w-[380px] sm:h-[500px] sm:max-h-[calc(100vh-40px)]">
           <div
-            className="flex items-center justify-between px-4 py-3 text-white"
-            style={{ backgroundColor: `hsl(${primaryColor})` }}
+            className="flex items-center justify-between px-3 py-2.5 text-white"
+            style={{ backgroundColor: '#090909' }}
           >
             <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center">
-                <MessageCircle className="h-5 w-5" />
-              </div>
+              <img src={brandLogo} alt="" className="h-11 w-11 rounded-full border border-white/20 bg-white object-contain p-0.5" />
               <div>
                 <p className="font-cairo font-bold text-sm">المساعد الذكي</p>
                 <p className="text-[10px] opacity-90 font-cairo flex items-center gap-1">
@@ -551,6 +573,25 @@ const RepairBookingPage: React.FC = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-muted/20">
+            {messages.length === 0 && (
+              <div className="space-y-3">
+                <div className="max-w-[90%] rounded-2xl border border-border bg-card px-3 py-2 text-sm leading-6 text-foreground font-cairo">
+                  أهلاً بيك في الوجيه! اكتب مشكلة العربية أو اختار سؤالاً للبدء.
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['أعمل حجز صيانة', 'أعاني من ضعف الفرامل', 'أحدث الفروع؟'].map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      onClick={() => setInput(suggestion)}
+                      className="rounded-full border border-red-200 bg-white px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-50"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-start' : 'justify-end'}`}>
                 <div

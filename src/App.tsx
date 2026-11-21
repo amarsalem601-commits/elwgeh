@@ -39,15 +39,16 @@ const ProfileManagementPage = lazy(() => import("./pages/ProfileManagementPage")
 const DatabaseViewerPage = lazy(() => import("./pages/DatabaseViewerPage"));
 const TeamManagementPage = lazy(() => import("./pages/TeamManagementPage"));
 const ShowcaseProductsPage = lazy(() => import("./pages/ShowcaseProductsPage"));
-const Index = lazy(() => import("./pages/Index"));
 const AboutPage = lazy(() => import("./pages/public/AboutPage"));
 const BranchesPage = lazy(() => import("./pages/public/BranchesPage"));
 const ContactPage = lazy(() => import("./pages/public/ContactPage"));
 const TeamPage = lazy(() => import("./pages/public/TeamPage"));
+const PublicProductsPage = lazy(() => import("./pages/public/PublicProductsPage"));
 import DashboardLayout from "./components/DashboardLayout";
 import EmployeeLayout from "./components/EmployeeLayout";
 import OfflineScreen from "./components/OfflineScreen";
 import InstallAppPrompt from "./components/InstallAppPrompt";
+import AppLaunchSplash from "./components/AppLaunchSplash";
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -84,8 +85,9 @@ const AppRoutes = () => {
       <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/dashboard' : '/employee-dashboard'} replace /> : <LoginPage />} />
       <Route path="/signup" element={isAuthenticated ? <Navigate to={userRole === 'admin' ? '/dashboard' : '/employee-dashboard'} replace /> : <SignupPage />} />
-      <Route path="/" element={<RepairBookingPage />} />
-      <Route path="/home" element={<Index />} />
+      <Route path="/" element={<Navigate to="/home" replace />} />
+      <Route path="/home" element={<RepairBookingPage mode="home" />} />
+      <Route path="/repair-booking" element={<RepairBookingPage mode="booking" />} />
       
       {/* Admin routes */}
       <Route path="/dashboard" element={<AdminRoute><DashboardPage /></AdminRoute>} />
@@ -120,11 +122,11 @@ const AppRoutes = () => {
       <Route path="/database" element={<AdminRoute><DatabaseViewerPage /></AdminRoute>} />
 
       {/* Public pages */}
-      <Route path="/repair-booking" element={<RepairBookingPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/branches" element={<BranchesPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/team" element={<TeamPage />} />
+      <Route path="/public-products" element={<PublicProductsPage />} />
 
       {/* Employee routes */}
       <Route path="/employee-dashboard" element={<EmployeeRoute><EmployeeDashboardPage /></EmployeeRoute>} />
@@ -157,6 +159,7 @@ const App = () => (
             <OfflineScreen>
               <Toaster />
               <BrowserRouter>
+                <AppLaunchSplash />
                 <InstallAppPrompt />
                 <AppRoutes />
               </BrowserRouter>

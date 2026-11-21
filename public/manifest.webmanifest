@@ -5,7 +5,7 @@
   "description": "خدمات صيانة منظمات الهواء والكلتش سيرفو وحجز المواعيد",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "/",
+  "start_url": "/home",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
