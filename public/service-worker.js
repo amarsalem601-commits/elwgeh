@@ -1,5 +1,5 @@
-const CACHE_NAME = 'elwageh-shell-v6';
-const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico'];
+const CACHE_NAME = 'elwageh-shell-v7';
+const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico', '/install-banner-logo-v2.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(

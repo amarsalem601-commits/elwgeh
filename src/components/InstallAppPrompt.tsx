@@ -70,8 +70,8 @@ const InstallAppPrompt: React.FC = () => {
         }`}
         dir="rtl"
       >
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1">
-          <img src="/install-banner-logo.png" alt="الوجيه" className="h-full w-full object-contain" />
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#090909]">
+          <img src="/install-banner-logo-v2.png" alt="الوجيه" className="h-full w-full object-contain" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-cairo text-sm font-bold">نزّل تطبيق الوجيه</p>
