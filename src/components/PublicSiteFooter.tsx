@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, MessageCircle, Phone } from 'lucide-react';
+import { Facebook, Instagram, MessageCircle, Phone, Youtube } from 'lucide-react';
 import brandLogo from '@/assets/el-wageh-brand.png';
 import { BRANCHES, CONTACT_BRANCHES } from '@/data/companyInfo';
 
@@ -48,6 +48,15 @@ const PublicSiteFooter: React.FC = () => (
               <MessageCircle className="absolute h-5 w-5" />
               <Phone className="relative h-2.5 w-2.5 fill-current" />
             </span>
+          </a>
+          <a
+            href="https://www.youtube.com/@elwageh-v1o"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="يوتيوب"
+            className="footer-social-link text-red-500"
+          >
+            <Youtube className="h-4 w-4" />
           </a>
         </div>
       </div>
