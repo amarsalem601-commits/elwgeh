@@ -183,6 +183,22 @@ button:not(:disabled):hover,
   filter: brightness(1.03);
 }
 
+/* From Uiverse.io by gksckt - https://uiverse.io/gksckt/young-eagle-60
+MIT License, Copyright (c) gksckt */
+button:not(:disabled):hover,
+.interactive-button:hover {
+  background-image: linear-gradient(90deg, #53cbef 0%, #dcc66c 50%, #ffa3b6 75%, #53cbef 100%);
+  background-size: 200% auto;
+  animation: site-button-gradient 5s linear infinite;
+  color: #000;
+}
+
+@keyframes site-button-gradient {
+  to {
+    background-position: 20vw;
+  }
+}
+
 button:not(:disabled):active,
 [role="button"][aria-disabled="true"]:active,
 [role="button"]:not([aria-disabled="true"]):active {
