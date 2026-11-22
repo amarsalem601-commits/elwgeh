@@ -10,13 +10,15 @@ const PublicProductsPage: React.FC = () => {
 
   return (
     <PublicPageLayout title="منتجاتنا">
-      <div className="mb-4 space-y-2 text-center">
-        <div className="inline-flex rounded-xl bg-red-50 p-3 text-red-600">
-          <Package className="h-7 w-7" />
+      <Reveal>
+        <div className="mb-4 space-y-2 text-center">
+          <div className="inline-flex rounded-xl bg-red-50 p-3 text-red-600">
+            <Package className="h-7 w-7" />
+          </div>
+          <h1 className="font-cairo text-2xl font-black text-slate-950">منتجاتنا</h1>
+          <p className="font-cairo text-sm text-slate-500">اختر من منتجات الوجيه المتاحة لسيارتك</p>
         </div>
-        <h1 className="font-cairo text-2xl font-black text-slate-950">منتجاتنا</h1>
-        <p className="font-cairo text-sm text-slate-500">اختر من منتجات الوجيه المتاحة لسيارتك</p>
-      </div>
+      </Reveal>
 
       {error && (
         <p role="status" className="rounded-lg bg-amber-50 px-4 py-2 text-center font-cairo text-xs text-amber-800">

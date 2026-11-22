@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import Reveal from '@/components/Reveal';
 import { Send, Wrench, Car, Phone, User, Calendar, MessageCircle, CheckCircle, ShoppingBag, MapPin, Clock, X, Shield, ChevronLeft, Settings, Truck } from 'lucide-react';
 import brandLogo from '@/assets/el-wageh-brand.png';
 import truckPhoto from '@/assets/volvo-truck.jpg';
@@ -369,102 +370,110 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
 
         {step === 'intro' && (
           <>
-            <section dir="ltr" className="grid overflow-hidden bg-black text-white md:min-h-[430px] md:grid-cols-2">
-              <div className="relative aspect-[4/3] min-h-[230px] overflow-hidden sm:aspect-video md:aspect-auto md:min-h-[430px]">
-                <img src={truckPhoto} alt="شاحنة فولفو" className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10" />
-                <Button onClick={() => setStep('form')} className="booking-hero-button absolute bottom-3 left-3 h-11 gap-2 rounded-full border-2 border-red-400 bg-red-600 px-4 text-sm font-black text-white shadow-xl hover:bg-red-700 sm:bottom-6 sm:left-6 sm:h-14 sm:px-8 sm:text-lg">
-                  <Truck className="hover-truck h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true" />
-                  <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>احجز صيانة الآن</span>
-                </Button>
-              </div>
-              <div dir="rtl" className="brand-hero-panel relative flex flex-col items-center justify-center overflow-hidden bg-[#080808] px-4 py-5 text-center sm:px-8 sm:py-7 md:py-8">
-                <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0, transparent 18px, rgba(255,255,255,.04) 19px, transparent 20px)' }} />
-                <img src={brandLogo} alt="الوجيه لمنظمات الهواء" className="brand-hero-logo relative z-10 max-h-40 w-full max-w-[500px] object-contain sm:max-h-64" />
-                <p className="relative z-10 mt-1 text-xs font-bold text-white/80 sm:mt-2 sm:text-base">صيانة احترافية .. أداء أقوى .. أمان أعلى</p>
-                <div className="relative z-10 mt-3 grid w-full max-w-xl grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-4">
-                  {[
-                    { icon: Wrench, label: 'فنيون متخصصون' },
-                    { icon: Settings, label: 'أحدث المعدات' },
-                    { icon: Shield, label: 'ضمان على الخدمة' },
-                    { icon: Clock, label: 'خدمة سريعة' },
-                  ].map(({ icon: Icon, label }) => (
-                    <div key={label} className="flex min-h-[54px] flex-row items-center justify-center gap-2 rounded-md bg-white px-2 py-2 text-[11px] font-black text-slate-900 sm:min-h-[64px] sm:flex-col sm:gap-1 sm:text-xs">
-                      <Icon className="h-4 w-4 shrink-0 text-red-600 sm:h-5 sm:w-5" />{label}
-                    </div>
-                  ))}
+            <Reveal>
+              <section dir="ltr" className="grid overflow-hidden bg-black text-white md:min-h-[430px] md:grid-cols-2">
+                <div className="relative aspect-[4/3] min-h-[230px] overflow-hidden sm:aspect-video md:aspect-auto md:min-h-[430px]">
+                  <img src={truckPhoto} alt="شاحنة فولفو" className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10" />
+                  <Button onClick={() => setStep('form')} className="booking-hero-button absolute bottom-3 left-3 h-11 gap-2 rounded-full border-2 border-red-400 bg-red-600 px-4 text-sm font-black text-white shadow-xl hover:bg-red-700 sm:bottom-6 sm:left-6 sm:h-14 sm:px-8 sm:text-lg">
+                    <Truck className="hover-truck h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true" />
+                    <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span>احجز صيانة الآن</span>
+                  </Button>
                 </div>
-              </div>
-            </section>
+                <div dir="rtl" className="brand-hero-panel relative flex flex-col items-center justify-center overflow-hidden bg-[#080808] px-4 py-5 text-center sm:px-8 sm:py-7 md:py-8">
+                  <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0, transparent 18px, rgba(255,255,255,.04) 19px, transparent 20px)' }} />
+                  <img src={brandLogo} alt="الوجيه لمنظمات الهواء" className="brand-hero-logo relative z-10 max-h-40 w-full max-w-[500px] object-contain sm:max-h-64" />
+                  <p className="relative z-10 mt-1 text-xs font-bold text-white/80 sm:mt-2 sm:text-base">صيانة احترافية .. أداء أقوى .. أمان أعلى</p>
+                  <div className="relative z-10 mt-3 grid w-full max-w-xl grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-4">
+                    {[
+                      { icon: Wrench, label: 'فنيون متخصصون' },
+                      { icon: Settings, label: 'أحدث المعدات' },
+                      { icon: Shield, label: 'ضمان على الخدمة' },
+                      { icon: Clock, label: 'خدمة سريعة' },
+                    ].map(({ icon: Icon, label }) => (
+                      <div key={label} className="flex min-h-[54px] flex-row items-center justify-center gap-2 rounded-md bg-white px-2 py-2 text-[11px] font-black text-slate-900 sm:min-h-[64px] sm:flex-col sm:gap-1 sm:text-xs">
+                        <Icon className="h-4 w-4 shrink-0 text-red-600 sm:h-5 sm:w-5" />{label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </Reveal>
 
-            <section dir="ltr" className="mx-3 grid overflow-hidden rounded-lg border-y-2 border-red-600 bg-white sm:mx-4 md:mx-auto md:max-w-7xl md:grid-cols-[.9fr_1.1fr]">
-              <div className="relative aspect-[4/3] min-h-[210px] overflow-hidden md:aspect-auto md:min-h-[270px]">
-                <img src={mechanicPhoto} alt="مرسيدس أكتروس أثناء الصيانة" className="absolute inset-0 h-full w-full object-cover object-center" />
-                <div className="absolute inset-0 border-[10px] border-red-600/90 md:border-[14px]" />
-              </div>
-              <div dir="rtl" className="flex flex-col justify-center px-4 py-6 text-right sm:px-8 md:py-10">
-                <p className="text-sm font-bold text-red-600">خبرة تثق بها على الطريق</p>
-                <h3 className="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">لماذا تختار <span className="text-red-600">الوجيه؟</span></h3>
-                <p className="mt-3 text-sm font-semibold leading-7 text-slate-700 sm:text-base">
-                  لأننا نمتلك الخبرة والمهارة في صيانة منظمات الهواء والكلتش سيرفو، لنضمن لك معايير أعلى للأمان والأداء في النقل الثقيل.
-                </p>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {['تشخيص دقيق للأعطال', 'قطع غيار موثوقة', 'ضمان على أعمال الصيانة', 'فروع قريبة منك'].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-800"><CheckCircle className="h-4 w-4 shrink-0 text-red-600" />{item}</div>
-                  ))}
+            <Reveal>
+              <section dir="ltr" className="mx-3 grid overflow-hidden rounded-lg border-y-2 border-red-600 bg-white sm:mx-4 md:mx-auto md:max-w-7xl md:grid-cols-[.9fr_1.1fr]">
+                <div className="relative aspect-[4/3] min-h-[210px] overflow-hidden md:aspect-auto md:min-h-[270px]">
+                  <img src={mechanicPhoto} alt="مرسيدس أكتروس أثناء الصيانة" className="absolute inset-0 h-full w-full object-cover object-center" />
+                  <div className="absolute inset-0 border-[10px] border-red-600/90 md:border-[14px]" />
                 </div>
-              </div>
-            </section>
+                <div dir="rtl" className="flex flex-col justify-center px-4 py-6 text-right sm:px-8 md:py-10">
+                  <p className="text-sm font-bold text-red-600">خبرة تثق بها على الطريق</p>
+                  <h3 className="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">لماذا تختار <span className="text-red-600">الوجيه؟</span></h3>
+                  <p className="mt-3 text-sm font-semibold leading-7 text-slate-700 sm:text-base">
+                    لأننا نمتلك الخبرة والمهارة في صيانة منظمات الهواء والكلتش سيرفو، لنضمن لك معايير أعلى للأمان والأداء في النقل الثقيل.
+                  </p>
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {['تشخيص دقيق للأعطال', 'قطع غيار موثوقة', 'ضمان على أعمال الصيانة', 'فروع قريبة منك'].map((item) => (
+                      <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-800"><CheckCircle className="h-4 w-4 shrink-0 text-red-600" />{item}</div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </Reveal>
 
             {/* Branches */}
-            <section className="mx-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:mx-4 sm:p-6 md:mx-auto md:max-w-7xl">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-black text-slate-900">فروعنا</h3>
-                  <p className="mt-1 text-sm text-slate-500">اختار أقرب فرع لك.</p>
+            <Reveal>
+              <section className="mx-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:mx-4 sm:p-6 md:mx-auto md:max-w-7xl">
+                <div className="mb-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-black text-slate-900">فروعنا</h3>
+                    <p className="mt-1 text-sm text-slate-500">اختار أقرب فرع لك.</p>
+                  </div>
+                  <MapPin className="h-6 w-6 text-red-600" />
                 </div>
-                <MapPin className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {BRANCHES.map((branch) => (
-                  <a key={branch.city} href={branch.mapUrl} target="_blank" rel="noreferrer" className="branch-location-card group flex items-center gap-3 rounded-lg border border-slate-200 p-4 hover:border-red-300 hover:bg-red-50/40">
-                    <div className="branch-pin-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600"><MapPin className="branch-pin-icon h-5 w-5" /></div>
-                    <div className="min-w-0">
-                      <h4 className="font-black text-slate-900">{branch.city}</h4>
-                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">{branch.address}</p>
-                    </div>
-                    <ChevronLeft className="mr-auto h-4 w-4 shrink-0 text-slate-300 transition-transform group-hover:-translate-x-1 group-hover:text-red-500" />
-                  </a>
-                ))}
-              </div>
-            </section>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {BRANCHES.map((branch) => (
+                    <a key={branch.city} href={branch.mapUrl} target="_blank" rel="noreferrer" className="branch-location-card group flex items-center gap-3 rounded-lg border border-slate-200 p-4 hover:border-red-300 hover:bg-red-50/40">
+                      <div className="branch-pin-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600"><MapPin className="branch-pin-icon h-5 w-5" /></div>
+                      <div className="min-w-0">
+                        <h4 className="font-black text-slate-900">{branch.city}</h4>
+                        <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">{branch.address}</p>
+                      </div>
+                      <ChevronLeft className="mr-auto h-4 w-4 shrink-0 text-slate-300 transition-transform group-hover:-translate-x-1 group-hover:text-red-500" />
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
 
             {/* Contact */}
-            <section className="mx-3 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm sm:mx-4 md:mx-auto md:max-w-7xl">
-              <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-                <h3 className="text-xl font-black text-slate-900">تواصل معنا</h3>
-                <Phone className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="grid gap-3 p-4 md:grid-cols-2">
-                {CONTACT_BRANCHES.map((branch) => (
-                  <div key={branch.name} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
-                    <h4 className="mb-2 flex items-center gap-2 font-cairo text-sm font-black text-slate-900">
-                      <MapPin className="h-4 w-4 text-red-600" />
-                      {branch.name}
-                    </h4>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {branch.phones.map((phone) => (
-                        <a key={phone} href={`tel:${phone}`} dir="ltr" className="flex items-center justify-center gap-2 rounded-lg border border-slate-100 bg-white px-3 py-2.5 text-sm font-black text-slate-800 shadow-sm hover:border-red-200 hover:text-red-700">
-                          <Phone className="h-4 w-4 text-red-600" />
-                          {phone}
-                        </a>
-                      ))}
+            <Reveal>
+              <section className="mx-3 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm sm:mx-4 md:mx-auto md:max-w-7xl">
+                <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                  <h3 className="text-xl font-black text-slate-900">تواصل معنا</h3>
+                  <Phone className="h-6 w-6 text-red-600" />
+                </div>
+                <div className="grid gap-3 p-4 md:grid-cols-2">
+                  {CONTACT_BRANCHES.map((branch) => (
+                    <div key={branch.name} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                      <h4 className="mb-2 flex items-center gap-2 font-cairo text-sm font-black text-slate-900">
+                        <MapPin className="h-4 w-4 text-red-600" />
+                        {branch.name}
+                      </h4>
+                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {branch.phones.map((phone) => (
+                          <a key={phone} href={`tel:${phone}`} dir="ltr" className="flex items-center justify-center gap-2 rounded-lg border border-slate-100 bg-white px-3 py-2.5 text-sm font-black text-slate-800 shadow-sm hover:border-red-200 hover:text-red-700">
+                            <Phone className="h-4 w-4 text-red-600" />
+                            {phone}
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
           </>
         )}
 
