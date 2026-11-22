@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Calendar, Ellipsis, Home, MapPin, Menu, Package, Phone, ShoppingBag, Users, X } from 'lucide-react';
+import { ArrowDownToLine, Calendar, Ellipsis, Home, MapPin, Menu, Package, Phone, ShoppingBag, Users, X } from 'lucide-react';
 import logo from '@/assets/el-wageh-brand.png';
 
 interface PublicSiteHeaderProps {
@@ -111,10 +111,28 @@ const PublicSiteHeader: React.FC<PublicSiteHeaderProps> = ({ onBook, onBookings 
           <button onClick={book} className="flex h-11 items-center gap-1.5 rounded-md bg-red-600 px-2.5 text-xs font-black text-white transition-colors hover:bg-red-700 xl:gap-2 xl:px-3 xl:text-sm">
             <Calendar className="h-4 w-4 shrink-0" /> احجز موعد إصلاح
           </button>
+          {!isStandalone && (
+            <button
+              type="button"
+              onClick={() => navigateTo('/download')}
+              className="flex h-11 items-center gap-1.5 rounded-md border border-white/25 px-2.5 text-xs font-bold text-white transition-colors hover:border-red-500 hover:bg-white/10 xl:gap-2 xl:px-3 xl:text-sm"
+            >
+              <ArrowDownToLine className="h-4 w-4 shrink-0" />
+              تحميل التطبيق
+            </button>
+          )}
         </nav>
 
         {!isStandalone && (
           <div dir="rtl" className="relative z-10 flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={() => navigateTo('/download')}
+              className="flex h-10 items-center gap-1.5 rounded-md bg-red-600 px-3 text-xs font-black text-white"
+            >
+              <ArrowDownToLine className="h-4 w-4" />
+              التطبيق
+            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(open => !open)}

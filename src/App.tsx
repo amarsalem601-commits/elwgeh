@@ -44,6 +44,7 @@ const BranchesPage = lazy(() => import("./pages/public/BranchesPage"));
 const ContactPage = lazy(() => import("./pages/public/ContactPage"));
 const TeamPage = lazy(() => import("./pages/public/TeamPage"));
 const PublicProductsPage = lazy(() => import("./pages/public/PublicProductsPage"));
+const DownloadAppPage = lazy(() => import("./pages/DownloadAppPage"));
 import DashboardLayout from "./components/DashboardLayout";
 import EmployeeLayout from "./components/EmployeeLayout";
 import OfflineScreen from "./components/OfflineScreen";
@@ -131,6 +132,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/team" element={<TeamPage />} />
       <Route path="/public-products" element={<PublicProductsPage />} />
+      <Route path="/download" element={<DownloadAppPage />} />
 
       {/* Employee routes */}
       <Route path="/employee-dashboard" element={<EmployeeRoute><EmployeeDashboardPage /></EmployeeRoute>} />
