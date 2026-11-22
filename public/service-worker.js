@@ -1,5 +1,29 @@
-const CACHE_NAME = 'elwageh-shell-v7';
-const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico', '/install-banner-logo-v2.png'];
+const CACHE_NAME = 'elwageh-shell-v8';
+const APP_SHELL = [
+  '/',
+  '/repair-booking',
+  '/manifest.webmanifest',
+  '/pwa-icon.svg',
+  '/pwa-icon-192.png',
+  '/pwa-icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon.ico',
+  '/install-banner-logo-v2.png',
+  '/truck-brands/mercedes.svg',
+  '/truck-brands/volvo.svg',
+  '/truck-brands/scania.svg',
+  '/truck-brands/man.svg',
+  '/truck-brands/kenworth.png',
+  '/truck-brands/daf.svg',
+  '/truck-brands/iveco.svg',
+  '/truck-brands/mack.png',
+  '/truck-brands/renault.svg',
+  '/truck-brands/isuzu.svg',
+  '/truck-brands/hino.svg',
+  '/truck-brands/mitsubishi.svg',
+  '/truck-brands/yutong.png',
+  '/truck-brands/peterbilt.png',
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(

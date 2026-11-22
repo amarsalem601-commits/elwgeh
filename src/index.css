@@ -269,6 +269,36 @@ button:not(:disabled):active,
   }
 }
 
+.truck-brands-viewport {
+  overflow: hidden;
+}
+
+.truck-brands-track {
+  display: flex;
+  width: max-content;
+  animation: truck-brands-scroll 45s linear infinite;
+}
+
+.truck-brands-viewport:hover .truck-brands-track {
+  animation-play-state: paused;
+}
+
+@keyframes truck-brands-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .truck-brands-viewport {
+    overflow-x: auto;
+  }
+
+  .truck-brands-track {
+    animation: none;
+  }
+}
+
 .branch-location-card {
   transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
     box-shadow 220ms ease,

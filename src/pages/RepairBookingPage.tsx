@@ -27,6 +27,22 @@ const statusConfig: Record<string, { label: string; color: string; icon: React.E
   cancelled: { label: 'ملغي', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400', icon: Clock },
 };
 
+const truckBrands = [
+  { name: 'Mercedes-Benz', logo: 'mercedes.svg' },
+  { name: 'Volvo Trucks', logo: 'volvo.svg' },
+  { name: 'Scania', logo: 'scania.svg' },
+  { name: 'MAN', logo: 'man.svg' },
+  { name: 'Kenworth', logo: 'kenworth.png' },
+  { name: 'DAF', logo: 'daf.svg' },
+  { name: 'Iveco', logo: 'iveco.svg' },
+  { name: 'Mack', logo: 'mack.png' },
+  { name: 'Renault Trucks', logo: 'renault.svg' },
+  { name: 'Isuzu', logo: 'isuzu.svg' },
+  { name: 'Hino', logo: 'hino.svg' },
+  { name: 'Mitsubishi Fuso', logo: 'mitsubishi.svg' },
+  { name: 'Yutong', logo: 'yutong.png' },
+  { name: 'Peterbilt', logo: 'peterbilt.png' },
+];
 
 const defaultSettings: Record<string, string> = {
   page_title: 'الوجيه لمنظمات الهواء',
@@ -255,6 +271,50 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
       />
 
       <main className={`repair-page-main space-y-5 pb-24 sm:space-y-6 lg:pb-28 ${step === 'intro' ? '' : 'px-3 py-4 sm:px-4'}`}>
+        {step === 'intro' && (
+          <section
+            aria-label="ماركات الشاحنات التي نخدمها"
+            className="overflow-hidden border-y border-red-700/40 bg-[#090909] py-4 text-white sm:py-5"
+          >
+            <div className="mx-auto max-w-7xl px-4">
+              <div className="mb-3 flex items-center justify-center gap-2 font-cairo text-xs font-bold text-white/75 sm:text-sm">
+                <Truck className="h-4 w-4 text-red-500" />
+                <span>خبرة في صيانة أشهر ماركات النقل الثقيل</span>
+              </div>
+              <div className="truck-brands-viewport" dir="ltr">
+                <div className="truck-brands-track">
+                  {[0, 1].map(copy => (
+                    <div
+                      key={copy}
+                      aria-hidden={copy === 1}
+                      className="flex shrink-0 items-center gap-3 pe-3 sm:gap-4 sm:pe-4"
+                    >
+                      {truckBrands.map(brand => (
+                        <span
+                          key={brand.name}
+                          className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 font-sans text-sm font-extrabold tracking-wide text-white/90 sm:min-h-11 sm:gap-2.5 sm:px-4 sm:text-base"
+                        >
+                          {brand.logo ? (
+                            <img
+                              src={`/truck-brands/${brand.logo}`}
+                              alt=""
+                              aria-hidden="true"
+                              className="h-7 w-7 shrink-0 rounded-full bg-white p-1"
+                            />
+                          ) : (
+                            <Truck className="h-5 w-5 shrink-0 text-red-500" aria-hidden="true" />
+                          )}
+                          {brand.name}
+                        </span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Booking Tracker */}
         {showTracker && (
           <Card className="mx-3 sm:mx-4" style={{ borderColor: `hsl(${primaryColor} / 0.2)` }}>
