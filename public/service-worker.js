@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elwageh-shell-v4';
+const CACHE_NAME = 'elwageh-shell-v6';
 const APP_SHELL = ['/', '/repair-booking', '/manifest.webmanifest', '/pwa-icon.svg', '/pwa-icon-192.png', '/pwa-icon-512.png', '/apple-touch-icon.png', '/favicon.ico'];
 
 self.addEventListener('install', event => {
@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
         console.warn('Unable to precache the production asset manifest', error);
       }
     })
-      .then(() => self.skipWaiting())
+      .then(() => {})
   );
 });
 
@@ -31,6 +31,12 @@ self.addEventListener('activate', event => {
       .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
+});
+
+self.addEventListener('message', event => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    void self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', event => {

@@ -49,6 +49,10 @@ import EmployeeLayout from "./components/EmployeeLayout";
 import OfflineScreen from "./components/OfflineScreen";
 import InstallAppPrompt from "./components/InstallAppPrompt";
 import AppLaunchSplash from "./components/AppLaunchSplash";
+import AppRatingPrompt from "./components/AppRatingPrompt";
+import MobilePermissionsPrompt from "./components/MobilePermissionsPrompt";
+import AppLaunchTone from "./components/AppLaunchTone";
+import AppUpdatePrompt from "./components/AppUpdatePrompt";
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -159,8 +163,12 @@ const App = () => (
             <OfflineScreen>
               <Toaster />
               <BrowserRouter>
+                <AppLaunchTone />
+                <AppUpdatePrompt />
                 <AppLaunchSplash />
                 <InstallAppPrompt />
+                <AppRatingPrompt />
+                <MobilePermissionsPrompt />
                 <AppRoutes />
               </BrowserRouter>
             </OfflineScreen>

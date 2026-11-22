@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Download, Share, X } from 'lucide-react';
+import { Share, X } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import appIcon from '@/assets/el-wageh-brand.png';
 
@@ -38,6 +38,8 @@ const InstallAppPrompt: React.FC = () => {
     };
     const onInstalled = () => {
       localStorage.setItem('elwageh:show-welcome', '1');
+      localStorage.setItem('elwageh:show-rating-prompt', '1');
+      localStorage.setItem('elwageh:show-mobile-permissions', '1');
       setInstallEvent(null);
     };
     window.addEventListener('beforeinstallprompt', onInstallAvailable);
@@ -68,8 +70,8 @@ const InstallAppPrompt: React.FC = () => {
         }`}
         dir="rtl"
       >
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-600">
-          <Download className="h-5 w-5" />
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="/install-banner-logo.png" alt="الوجيه" className="h-full w-full object-contain" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-cairo text-sm font-bold">نزّل تطبيق الوجيه</p>
@@ -92,7 +94,7 @@ const InstallAppPrompt: React.FC = () => {
                 <p className="text-xs font-bold text-red-600">تثبيت التطبيق</p>
                 <h2 className="font-cairo text-lg font-black">الوجيه على شاشتك</h2>
               </div>
-              <button onClick={() => { localStorage.setItem('elwageh:show-welcome', '1'); setShowIosHelp(false); }} aria-label="إغلاق" className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <button onClick={() => { localStorage.setItem('elwageh:show-welcome', '1'); localStorage.setItem('elwageh:show-rating-prompt', '1'); localStorage.setItem('elwageh:show-mobile-permissions', '1'); setShowIosHelp(false); }} aria-label="إغلاق" className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -110,7 +112,7 @@ const InstallAppPrompt: React.FC = () => {
                 <p className="font-cairo text-sm font-bold leading-6">اضغط «إضافة» للتثبيت</p>
               </div>
             </div>
-            <button onClick={() => { localStorage.setItem('elwageh:show-welcome', '1'); setShowIosHelp(false); }} className="mt-4 w-full rounded-xl bg-red-600 px-4 py-3 font-cairo font-bold text-white shadow-lg shadow-red-600/20">حسناً</button>
+            <button onClick={() => { localStorage.setItem('elwageh:show-welcome', '1'); localStorage.setItem('elwageh:show-rating-prompt', '1'); localStorage.setItem('elwageh:show-mobile-permissions', '1'); setShowIosHelp(false); }} className="mt-4 w-full rounded-xl bg-red-600 px-4 py-3 font-cairo font-bold text-white shadow-lg shadow-red-600/20">حسناً</button>
           </div>
         </div>
       )}
