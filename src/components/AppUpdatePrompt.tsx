@@ -6,6 +6,8 @@ const AppUpdatePrompt: React.FC = () => {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
+    const standalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (!standalone) return;
     if (!('serviceWorker' in navigator)) return;
 
     let controllerChanged = false;
