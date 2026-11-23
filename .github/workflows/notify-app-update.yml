@@ -1,0 +1,44 @@
+name: Notify installed apps about updates
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check push notification secrets
+        id: config
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PUSH_DEPLOY_TOKEN: ${{ secrets.PUSH_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$SUPABASE_PROJECT_URL" ] || [ -z "$SUPABASE_ANON_KEY" ] || [ -z "$PUSH_DEPLOY_TOKEN" ]; then
+            echo "::warning::Set SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY, and PUSH_DEPLOY_TOKEN in GitHub Actions secrets to enable app update notifications."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Send app update push notifications
+        if: steps.config.outputs.configured == 'true'
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PUSH_DEPLOY_TOKEN: ${{ secrets.PUSH_DEPLOY_TOKEN }}
+          VERSION: ${{ github.sha }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            "${SUPABASE_PROJECT_URL%/}/functions/v1/notify-app-update" \
+            --header "Content-Type: application/json" \
+            --header "apikey: ${SUPABASE_ANON_KEY}" \
+            --header "x-deploy-token: ${PUSH_DEPLOY_TOKEN}" \
+            --data "{\"version\":\"${VERSION}\"}"

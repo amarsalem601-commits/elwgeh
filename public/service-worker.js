@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elwageh-shell-v8';
+const CACHE_NAME = 'elwageh-shell-v9';
 const APP_SHELL = [
   '/',
   '/repair-booking',
@@ -61,6 +61,43 @@ self.addEventListener('message', event => {
   if (event.data?.type === 'SKIP_WAITING') {
     void self.skipWaiting();
   }
+});
+
+self.addEventListener('push', event => {
+  let payload = {};
+  try {
+    payload = event.data?.json() || {};
+  } catch (error) {
+    console.error('Unable to parse app update push payload', error);
+  }
+
+  const title = typeof payload.title === 'string' ? payload.title : 'تحديث جديد من الوجيه';
+  const options = {
+    body: typeof payload.body === 'string' ? payload.body : 'يوجد تحديث جديد للتطبيق. اضغط لفتحه.',
+    icon: '/pwa-icon-192.png',
+    badge: '/pwa-icon-192.png',
+    tag: 'elwageh-app-update',
+    data: { url: typeof payload.url === 'string' ? payload.url : '/home' },
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || '/home', self.location.origin);
+  if (target.origin !== self.location.origin) target.href = new URL('/home', self.location.origin).href;
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async clients => {
+      const existingClient = clients.find(client => 'focus' in client);
+      if (existingClient) {
+        if ('navigate' in existingClient) await existingClient.navigate(target.href);
+        return existingClient.focus();
+      }
+      return self.clients.openWindow(target.href);
+    }),
+  );
 });
 
 self.addEventListener('fetch', event => {

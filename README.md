@@ -79,3 +79,15 @@ The public website can be installed from a supported mobile browser using **نز
 After the first online visit, the service worker caches the app shell and loaded static files; the public team and showcase product lists are also kept on the device. Booking submissions, account sign-in, and admin changes still require an internet connection.
 
 Before deploying, apply the Supabase migration `20261120150000_add_public_showcase_products.sql`. Admins can then manage the public catalog from **Settings → Public Showcase Products**; the existing team editor remains under **Team Management**.
+
+### Installed app update notifications
+
+Installed users can receive push notifications for commits pushed to `main`, including while the app is closed. Push delivery requires notification permission, a deployed service worker, and the one-time setup below:
+
+1. Generate a VAPID key pair with `npx web-push generate-vapid-keys`.
+2. Apply `supabase/migrations/20261123223000_add_app_update_push_subscriptions.sql` to the Supabase project.
+3. Generate a random deploy token locally (for example, `openssl rand -hex 32`). Set the Supabase Edge Function secrets `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (for example, `mailto:admin@example.com`), and `PUSH_DEPLOY_TOKEN`. Deploy `notify-app-update` with `supabase functions deploy notify-app-update --project-ref koqcjwhawmftoavlobiy`.
+4. Add `VITE_VAPID_PUBLIC_KEY` to the production app's build environment and redeploy the app.
+5. Add GitHub Actions repository secrets `SUPABASE_PROJECT_URL` (the Supabase project URL), `SUPABASE_ANON_KEY` (the project's public anon/publishable key), and `PUSH_DEPLOY_TOKEN` (the same token configured in Supabase).
+
+The private VAPID key and deploy token must only be stored as server/GitHub secrets, never in the app build or source code. Users must allow notifications in the installed app to subscribe.

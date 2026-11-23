@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.erp-assistant]
 verify_jwt = false
+
+[functions.notify-app-update]
+verify_jwt = false

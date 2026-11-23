@@ -572,6 +572,30 @@ export type Database = {
         }
         Relationships: []
       }
+      app_update_push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          p256dh: string
+          updated_at: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          p256dh: string
+          updated_at?: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          p256dh?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

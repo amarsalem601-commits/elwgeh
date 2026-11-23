@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bell, Camera, MapPin, ShieldCheck, X } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { registerAppUpdatePush } from '@/lib/appUpdatePush';
 
 const pendingKey = 'elwageh:show-mobile-permissions';
 const decisionsKey = 'elwageh:mobile-permission-decisions';
@@ -19,6 +21,7 @@ const defaultDecisions: PermissionDecisions = {
 };
 
 const MobilePermissionsPrompt: React.FC = () => {
+  const { toast } = useToast();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -54,6 +57,19 @@ const MobilePermissionsPrompt: React.FC = () => {
           await Notification.requestPermission();
         } catch {
           // The browser can decline notification permission requests.
+        }
+      }
+
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          await registerAppUpdatePush();
+        } catch (error) {
+          console.error('Unable to enable app update notifications', error);
+          toast({
+            title: 'تعذر تفعيل إشعارات تحديث التطبيق',
+            description: 'تأكد من إعداد الإشعارات واتصال الإنترنت، ثم حاول مرة أخرى.',
+            variant: 'destructive',
+          });
         }
       }
 

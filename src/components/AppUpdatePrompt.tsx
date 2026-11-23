@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RefreshCw, X } from 'lucide-react';
+import { isAppUpdatePushConfigured, registerAppUpdatePush } from '@/lib/appUpdatePush';
 
 const AppUpdatePrompt: React.FC = () => {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
@@ -9,6 +10,11 @@ const AppUpdatePrompt: React.FC = () => {
     const standalone = window.matchMedia('(display-mode: standalone)').matches;
     if (!standalone) return;
     if (!('serviceWorker' in navigator)) return;
+    if ('Notification' in window && Notification.permission === 'granted' && isAppUpdatePushConfigured) {
+      void registerAppUpdatePush().catch(error => {
+        console.error('Unable to register for app update notifications', error);
+      });
+    }
 
     let controllerChanged = false;
     const reloadOnce = () => {
