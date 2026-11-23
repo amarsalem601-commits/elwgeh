@@ -23,12 +23,12 @@ export const registerAppUpdatePush = async (): Promise<void> => {
     throw new Error('إشعارات التحديث غير مدعومة على هذا الجهاز');
   }
   if (Notification.permission !== 'granted') return;
-  if (!vapidPublicKey) throw new Error('مفتاح إشعارات التحديث غير مُعدّ في التطبيق');
 
   const registration = await navigator.serviceWorker.ready;
   let subscription = await registration.pushManager.getSubscription();
 
   if (!subscription) {
+    if (!vapidPublicKey) throw new Error('مفتاح إشعارات التحديث غير مُعدّ في التطبيق');
     subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: decodeVapidPublicKey(vapidPublicKey),
@@ -40,15 +40,11 @@ export const registerAppUpdatePush = async (): Promise<void> => {
     throw new Error('تعذر قراءة بيانات اشتراك الإشعارات');
   }
 
-  const { error } = await supabase.from('app_update_push_subscriptions').upsert(
-    {
-      endpoint: subscriptionData.endpoint,
-      p256dh: subscriptionData.keys.p256dh,
-      auth: subscriptionData.keys.auth,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'endpoint' },
-  );
+  const { error } = await supabase.rpc('register_app_update_push_subscription', {
+    p_endpoint: subscriptionData.endpoint,
+    p_p256dh: subscriptionData.keys.p256dh,
+    p_auth: subscriptionData.keys.auth,
+  });
 
   if (error) throw error;
 };

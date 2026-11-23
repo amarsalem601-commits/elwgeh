@@ -1062,6 +1062,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      register_app_update_push_subscription: {
+        Args: {
+          p_auth: string
+          p_endpoint: string
+          p_p256dh: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "employee"
