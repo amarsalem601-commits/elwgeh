@@ -271,11 +271,11 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
         }
       />
 
-      <main className={`repair-page-main space-y-5 pb-24 sm:space-y-6 lg:pb-28 ${step === 'intro' ? '' : 'px-3 py-4 sm:px-4'}`}>
+      <main className={`repair-page-main space-y-5 sm:space-y-6 ${step === 'intro' ? 'pb-0' : 'px-3 py-4 pb-24 sm:px-4 lg:pb-28'}`}>
         {step === 'intro' && (
           <section
             aria-label="ماركات الشاحنات التي نخدمها"
-            className="overflow-hidden border-y border-red-700/40 bg-[#090909] py-4 text-white sm:py-5"
+            className="-mb-5 overflow-hidden border-y border-red-700/40 bg-[#090909] py-4 text-white sm:-mb-6 sm:py-5"
           >
             <div className="mx-auto max-w-7xl px-4">
               <div className="mb-3 flex items-center justify-center gap-2 font-cairo text-xs font-bold text-white/75 sm:text-sm">
@@ -612,7 +612,7 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(true)}
-          className="fixed bottom-[80px] left-3 z-[65] flex h-14 w-14 items-center justify-center overflow-visible rounded-full border-2 border-white bg-[#090909] shadow-[0_8px_28px_rgba(15,23,42,.35)] ring-2 ring-red-600/70 transition-transform hover:scale-105 sm:bottom-5 sm:left-5"
+          className="chatbot-trigger fixed bottom-20 left-3 z-[65] flex h-14 w-14 items-center justify-center overflow-visible rounded-full border-2 border-white bg-[#090909] shadow-[0_8px_28px_rgba(15,23,42,.35)] ring-2 ring-red-600/70 transition-transform hover:scale-105 sm:left-5 md:bottom-auto md:top-[62%]"
           aria-label="افتح المساعد الذكي"
         >
           <img src={brandLogo} alt="" className="h-12 w-12 rounded-full object-contain" />
@@ -621,7 +621,7 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
       )}
 
       {chatOpen && (
-        <div className="fixed bottom-[80px] left-3 z-[65] flex h-[min(520px,calc(100dvh-170px))] w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl sm:bottom-5 sm:left-5 sm:w-[380px] sm:h-[500px] sm:max-h-[calc(100vh-40px)]">
+        <div className="chatbot-panel fixed bottom-20 left-3 z-[65] flex h-[min(520px,calc(100dvh-170px))] w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl sm:bottom-5 sm:left-5 sm:w-[380px] sm:h-[500px] sm:max-h-[calc(100vh-40px)]">
           <div
             className="flex items-center justify-between px-3 py-2.5 text-white"
             style={{ backgroundColor: '#090909' }}
