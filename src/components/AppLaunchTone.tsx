@@ -4,9 +4,7 @@ const AppLaunchTone: React.FC = () => {
   const hasPlayed = useRef(false);
 
   useEffect(() => {
-    if (!window.matchMedia('(display-mode: standalone)').matches) return;
-
-    const audio = new Audio('/app-launch.wav');
+    const audio = new Audio('/app-launch.aac');
     let disposed = false;
 
     const removeInteractionListeners = () => {

@@ -1,8 +1,8 @@
-const CACHE_NAME = 'elwageh-shell-v10';
+const CACHE_NAME = 'elwageh-shell-v11';
 const APP_SHELL = [
   '/',
   '/repair-booking',
-  '/app-launch.wav',
+  '/app-launch.aac',
   '/manifest.webmanifest',
   '/pwa-icon.svg',
   '/pwa-icon-192.png',
