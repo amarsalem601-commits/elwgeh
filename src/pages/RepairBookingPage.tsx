@@ -15,6 +15,7 @@ import mechanicPhoto from '@/assets/mercedes-acros.jpg';
 import { BRANCHES, CONTACT_BRANCHES, PHONES } from '@/data/companyInfo';
 import PublicSiteHeader from '@/components/PublicSiteHeader';
 import PublicSiteFooter from '@/components/PublicSiteFooter';
+import Lanyard from '@/components/Lanyard/Lanyard';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -383,8 +384,27 @@ const RepairBookingPage: React.FC<RepairBookingPageProps> = ({ mode = 'booking' 
                 </div>
                 <div dir="rtl" className="brand-hero-panel relative flex flex-col items-center justify-center overflow-hidden bg-[#080808] px-4 py-5 text-center sm:px-8 sm:py-7 md:py-8">
                   <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0, transparent 18px, rgba(255,255,255,.04) 19px, transparent 20px)' }} />
-                  <img src={brandLogo} alt="الوجيه لمنظمات الهواء" className="brand-hero-logo relative z-10 max-h-40 w-full max-w-[500px] object-contain sm:max-h-64" />
-                  <p className="relative z-10 mt-1 text-xs font-bold text-white/80 sm:mt-2 sm:text-base">صيانة احترافية .. أداء أقوى .. أمان أعلى</p>
+                  <div className="relative z-10 h-[230px] w-full max-w-[500px] sm:h-[270px] md:h-[300px]">
+                    <Lanyard
+                      frontImage={brandLogo}
+                      backImage={brandLogo}
+                      imageFit="contain"
+                      orientation="portrait"
+                      finish="metallic"
+                      cornerRadius={0.35}
+                      size={0.58}
+                      strapColor="#dc2626"
+                      strapWidth={0.72}
+                      metal="silver"
+                      gravity={0.9}
+                      damping={0.65}
+                      elasticity={0.45}
+                      breeze={0.35}
+                      interactive
+                      intro
+                    />
+                  </div>
+                  <p className="relative z-10 -mt-1 text-xs font-bold text-white/80 sm:-mt-2 sm:text-base">صيانة احترافية .. أداء أقوى .. أمان أعلى</p>
                   <div className="relative z-10 mt-3 grid w-full max-w-xl grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-4">
                     {[
                       { icon: Wrench, label: 'فنيون متخصصون' },

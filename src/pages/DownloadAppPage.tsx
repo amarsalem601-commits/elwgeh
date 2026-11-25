@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ArrowDownToLine, Check, ChevronLeft, Clock3, Share, ShieldCheck, Smartphone } from 'lucide-react';
 import { promptToInstall, subscribeToInstallPrompt, type InstallPromptEvent } from '@/lib/pwaInstall';
+import HoloMosaic from '@/components/HoloMosaic/HoloMosaic';
 
 const isInstalledApp = () =>
   window.matchMedia('(display-mode: standalone)').matches ||
@@ -100,11 +101,35 @@ const DownloadAppPage: React.FC = () => {
           <div className="order-1 mx-auto w-full max-w-sm md:order-2">
             <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/[.08] to-white/[.02] p-5 shadow-2xl shadow-black/40">
               <div className="absolute inset-x-10 top-0 h-32 bg-red-600/20 blur-3xl" />
-              <img
-                src="/brand-logo.png"
-                alt="شعار الوجيه لمنظمات الهواء"
-                className="relative mx-auto aspect-square w-full max-w-[320px] rounded-[1.5rem] object-contain"
-              />
+              <div className="relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#090909]">
+                <HoloMosaic
+                  color="#090909"
+                  metalColor="#f4f4f5"
+                  spectrum="warm"
+                  tileSize={0.85}
+                  gap={0.06}
+                  roundness={0.18}
+                  bevel={0.55}
+                  scatter={0.45}
+                  tilt={0.28}
+                  saturation={0.22}
+                  intensity={1.35}
+                  ripple={0.7}
+                  glitter={0.9}
+                  sheen={0.85}
+                  grain={0.06}
+                  speed={0.45}
+                  fade={0.08}
+                  intro
+                  mouseInteraction
+                  flipOnClick
+                />
+                <img
+                  src="/brand-logo.png"
+                  alt="شعار الوجيه لمنظمات الهواء"
+                  className="pointer-events-none absolute inset-[18%] h-[64%] w-[64%] object-contain drop-shadow-2xl"
+                />
+              </div>
               <div className="relative mt-3 rounded-2xl border border-white/10 bg-black/40 p-4 text-center">
                 <p className="font-cairo text-lg font-black">الوجيه لمنظمات الهواء</p>
                 <p className="mt-1 font-cairo text-sm text-white/55">Air Brake &amp; Clutch Servo</p>
