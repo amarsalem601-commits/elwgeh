@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, MessageCircle, Phone, Youtube } from 'lucide-react';
+import { Facebook, Instagram, MessageCircle, Music2, Phone, Youtube } from 'lucide-react';
 import brandLogo from '@/assets/el-wageh-brand.png';
 import { BRANCHES, CONTACT_BRANCHES } from '@/data/companyInfo';
 
@@ -57,6 +57,15 @@ const PublicSiteFooter: React.FC = () => (
             className="footer-social-link text-red-500"
           >
             <Youtube className="h-4 w-4" />
+          </a>
+          <a
+            href="https://www.tiktok.com/@elwageh356"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="تيك توك"
+            className="footer-social-link"
+          >
+            <Music2 className="h-4 w-4" />
           </a>
         </div>
       </div>
